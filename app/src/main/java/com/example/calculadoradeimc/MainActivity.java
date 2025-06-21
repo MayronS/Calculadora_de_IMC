@@ -2,9 +2,12 @@ package com.example.calculadoradeimc;
 import java.text.DecimalFormat;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -77,5 +80,22 @@ public class MainActivity extends AppCompatActivity {
         else{
             binding.txtResultado.setText("Seu IMC é de " + format + "\n Obesidade (grau 3)");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.ic_limpar){
+            binding.editPeso.setText("");
+            binding.editAltura.setText("");
+            binding.txtResultado.setText("");
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
