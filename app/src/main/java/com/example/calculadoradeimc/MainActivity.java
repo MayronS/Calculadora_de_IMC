@@ -2,9 +2,12 @@ package com.example.calculadoradeimc;
 import java.text.DecimalFormat;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -52,30 +55,47 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void calcularImc(){
-        float peso = Float.parseFloat(binding.editPeso.getText().toString());
-        float altura = Float.parseFloat(binding.editAltura.getText().toString());
+        float peso = Float.parseFloat(binding.editPeso.getText().toString().replace(",", "."));
+        float altura = Float.parseFloat(binding.editAltura.getText().toString().replace(",","."));
 
 
         float imc = peso / (altura * altura);
-        String format = String.format("%.2f", imc);
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (imc < 18.5){
-             binding.txtResultado.setText("Seu IMC é de " + format + "\n Peso Baixo");
+             binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Peso Baixo");
         }
         else if(imc <= 24.9){
-            binding.txtResultado.setText("Seu IMC é de " + format + "\n Peso Normal");
+            binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Peso Normal");
         }
         else if(imc <= 29.9){
-            binding.txtResultado.setText("Seu IMC é de " + format + "\n Sobrepeso");
+            binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Sobrepeso");
         }
         else if(imc <= 34.9){
-            binding.txtResultado.setText("Seu IMC é de " + format + "\n Obesidade (grau 1)");
+            binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Obesidade (grau 1)");
         }
         else if(imc <= 39.9){
-            binding.txtResultado.setText("Seu IMC é de " + format + "\n Obesidade (grau 2)");
+            binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Obesidade (grau 2)");
         }
         else{
-            binding.txtResultado.setText("Seu IMC é de " + format + "\n Obesidade (grau 3)");
+            binding.txtResultado.setText("Seu IMC é de " + df.format(imc) + "\n Obesidade (grau 3)");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.ic_limpar){
+            binding.editPeso.setText("");
+            binding.editAltura.setText("");
+            binding.txtResultado.setText("");
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
